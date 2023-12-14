@@ -12,7 +12,6 @@ yarn dev
 ## Preferred Technology
 
 - Tailwind css
-- Atomic design
 - NextJS
 
 ## Exercise #1
