@@ -2,35 +2,55 @@ import type { NextPage } from "next"
 import Image from "next/image"
 import ReviveSvg from "../../public/images/revive.svg";
 import mainHome from "../../public/images/main-home.png";
-import { useState, useEffect } from 'react';
-import addUsers from '../../scripts/seedFBData';
+import { useState } from 'react';
+import addData from '../../scripts/seedFBData';
+import bcrypt from "bcryptjs";
+import Router from 'next/router'
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 
-addUsers();
+// uncomment to reseed user and home collections based on data in the json
+// addData();
 
 const Login: NextPage = () => {
 
-  const [ user, setUser ] = useState({
+  const [user, setUser] = useState({
     email: "",
     password: "",
   });
 
-  // useEffect(() => {
-     //   localStorage.setItem('value', JSON.stringify(value))
-     // },[value])
+  const [errMsg, setErrMsg] = useState('');
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const {target: { id, value }} = event;
+    const { target: { id, value } } = event;
     const updateUser = { ...user, [id]: value }
     setUser(updateUser);
-    localStorage.setItem("user", JSON.stringify(updateUser))
   }
 
-  const onClick = (event: React.PointerEvent<HTMLButtonElement>) => {
+  const onClick = async (event: React.PointerEvent<HTMLButtonElement>) => {
     event.preventDefault();
     const { email, password } = user;
-    if (email && password) {
 
+    if (!email) return setErrMsg("Email cannot be empty");
+    if (!password) return setErrMsg("Password cannot be empty");
+
+    const userRef = collection(db, "users");
+    const userDoc = await getDocs(query(userRef, where("email", "==", email)));
+    if (userDoc.size) {
+      const userData = userDoc.docs[0].data();
+      const { password: hash } = userData;
+      if (bcrypt.compareSync(password, hash)) {
+        localStorage.setItem("user", JSON.stringify(userData))
+        Router.push("/home");
+      }
+      return setErrMsg("Invalid Password");
     }
+    return setErrMsg(`Could not find user with email: ${user.email}`);
   }
 
   return (
@@ -43,9 +63,9 @@ const Login: NextPage = () => {
               alt="Revive Svg"
             />
           </div>
-          <div className="mt-12 flex flex-col items-center mx-auto max-w-xs">
-            <div className="w-full flex-1 mt-8">
-              <div className="my-8">
+          <div className="mt-6 flex flex-col items-center mx-auto max-w-xs">
+            <div className="w-full flex-1 mt-6">
+              <div className="my-6">
                 <span className="text-xl">
                   Sign In
                 </span>
@@ -76,6 +96,12 @@ const Login: NextPage = () => {
                   Login
                 </span>
               </button>
+              {errMsg && (
+                <>
+                  <div className="mt-6" />
+                  <p className="text-sm text-red-500 text-left">{errMsg}</p>
+                </>
+              )}
               <p className="mt-6 text-xs text-right">
                 <a href="#" className="border-b border-gray-500 border-dotted">
                   Forgot Password?

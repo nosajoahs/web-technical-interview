@@ -20,9 +20,8 @@ export default async function addData() {
         users.map(async user => {
             const password = await bcrypt.hash(user.password, 5)
             const hashedUser = { ...user, password };
-            await addDoc(collection(db, 'users'), {
-                hashedUser,
-            })
+            console.log('hashedUser ', hashedUser);
+            await addDoc(collection(db, 'users'), hashedUser);
         }) 
     })
 
@@ -32,9 +31,7 @@ export default async function addData() {
             return;
         }
         homes.map(async home => {
-            await addDoc(collection(db, 'homes'), {
-                home,
-            })
+            await addDoc(collection(db, 'homes'), home);
         }) 
     })
 }
