@@ -3,7 +3,7 @@ import Head from "next/head"
 import Image from "next/image"
 import styles from "../styles/Home.module.css"
 import homes from "../../data/homes.json";
-import reviveLogo from '../../public/images/reviveLogo.png'
+import ReviveSvg from "../../public/images/revive.svg";
 
 const Home: NextPage = () => {
   return (
@@ -13,7 +13,10 @@ const Home: NextPage = () => {
       </Head>
       <main className={styles.main}>
         <span className={styles.logo}>
-          <Image src={reviveLogo} alt="Revive Logo" />
+          <Image 
+            src={ReviveSvg} 
+            alt="Revive Logo"
+          />
         </span>
 
         <ul>

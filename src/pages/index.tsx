@@ -2,8 +2,37 @@ import type { NextPage } from "next"
 import Image from "next/image"
 import ReviveSvg from "../../public/images/revive.svg";
 import mainHome from "../../public/images/main-home.png";
+import { useState, useEffect } from 'react';
+import addUsers from '../../scripts/seedFBData';
+
+addUsers();
 
 const Login: NextPage = () => {
+
+  const [ user, setUser ] = useState({
+    email: "",
+    password: "",
+  });
+
+  // useEffect(() => {
+     //   localStorage.setItem('value', JSON.stringify(value))
+     // },[value])
+
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const {target: { id, value }} = event;
+    const updateUser = { ...user, [id]: value }
+    setUser(updateUser);
+    localStorage.setItem("user", JSON.stringify(updateUser))
+  }
+
+  const onClick = (event: React.PointerEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    const { email, password } = user;
+    if (email && password) {
+
+    }
+  }
+
   return (
     <div className="min-h-screen flex justify-center">
       <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow flex justify-center flex-1">
@@ -17,7 +46,7 @@ const Login: NextPage = () => {
           <div className="mt-12 flex flex-col items-center mx-auto max-w-xs">
             <div className="w-full flex-1 mt-8">
               <div className="my-8">
-                <span className="text-gray-600 text-xl">
+                <span className="text-xl">
                   Sign In
                 </span>
               </div>
@@ -25,6 +54,8 @@ const Login: NextPage = () => {
                 className="w-full px-8 py-4 rounded-lg bg-gray-100 border text-sm"
                 type="email"
                 id="email"
+                onChange={onChange}
+                value={user.email}
                 placeholder="Enter email"
                 required
               />
@@ -32,17 +63,20 @@ const Login: NextPage = () => {
                 className="w-full px-8 py-4 rounded-lg bg-gray-100 border text-sm mt-5"
                 type="password"
                 id="password"
+                onChange={onChange}
+                value={user.password}
                 placeholder="Enter password"
                 required
-                minLength={5}
               />
               <button
-                className="mt-5 font-semibold text-indigo-100 bg-revive w-full py-4 rounded-lg hover:bg-gray-400 transition-all duration-300 ease-in-out flex items-center justify-center">
+                className="mt-5 text-gray-200 font-semibold bg-defaultBtn w-full py-4 rounded-lg hover:bg-defaultBtnHover transition-all duration-300 ease-in-out flex items-center justify-center"
+                onClick={onClick}
+              >
                 <span>
                   Login
                 </span>
               </button>
-              <p className="mt-6 text-xs text-gray-600 text-right">
+              <p className="mt-6 text-xs text-right">
                 <a href="#" className="border-b border-gray-500 border-dotted">
                   Forgot Password?
                 </a>
