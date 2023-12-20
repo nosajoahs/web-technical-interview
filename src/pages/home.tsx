@@ -51,7 +51,7 @@ const Home: NextPage = () => {
                 <Image
                   src={homesImg}
                   alt="Home Img"
-                  // style={{hover: "contain"}}
+                  className="transition duration-300 ease-in-out hover:scale-110"
                 />
                 <h2 className="capitalize font-bold text-gray-800">{home.address}</h2>
                 <div className="text-gray-600 flex pb-4">

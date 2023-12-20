@@ -1,11 +1,11 @@
-import type { NextPage } from "next"
-import Image from "next/image"
+import type { NextPage } from "next";
+import Image from "next/image";
 import ReviveSvg from "../../public/images/revive.svg";
 import mainHome from "../../public/images/main-home.png";
 import { useState } from 'react';
 import addData from '../../scripts/seedFBData';
 import bcrypt from "bcryptjs";
-import Router from 'next/router'
+import Router from 'next/router';
 import {
   collection,
   getDocs,
@@ -74,6 +74,7 @@ const Login: NextPage = () => {
                 className="w-full px-8 py-4 rounded-lg bg-gray-100 border text-sm"
                 type="email"
                 id="email"
+                data-testid="email"
                 onChange={onChange}
                 value={user.email}
                 placeholder="Enter email"
@@ -83,6 +84,7 @@ const Login: NextPage = () => {
                 className="w-full px-8 py-4 rounded-lg bg-gray-100 border text-sm mt-5"
                 type="password"
                 id="password"
+                data-testid="password"
                 onChange={onChange}
                 value={user.password}
                 placeholder="Enter password"
@@ -90,6 +92,7 @@ const Login: NextPage = () => {
               />
               <button
                 className="mt-5 text-gray-200 font-semibold bg-defaultBtn w-full py-4 rounded-lg hover:bg-defaultBtnHover transition-all duration-300 ease-in-out flex items-center justify-center"
+                data-testid="login"
                 onClick={onClick}
               >
                 <span>

@@ -32,3 +32,11 @@ The next phase is building a simple sign in page. The example we are building is
 - Use the users.json to authenticate the user
 - Save to localStorage with the user that is authenticated
 - Provide feedback that the user has been authenticated
+
+## To Run
+
+1. run `git clone https://github.com/nosajoahs/web-technical-interview.git`
+2. cd into the directory
+3. run `yarn install`
+4. run `npm run dev`
+5. run `npm test` for jest
