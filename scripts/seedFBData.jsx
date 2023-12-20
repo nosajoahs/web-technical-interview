@@ -20,7 +20,6 @@ export default async function addData() {
         users.map(async user => {
             const password = await bcrypt.hash(user.password, 5)
             const hashedUser = { ...user, password };
-            console.log('hashedUser ', hashedUser);
             await addDoc(collection(db, 'users'), hashedUser);
         }) 
     })

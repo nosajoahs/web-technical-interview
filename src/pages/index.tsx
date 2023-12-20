@@ -14,7 +14,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 
-// uncomment to reseed user and home collections based on data in the json
+// will seed user and home collections based on data in the json if data does not exist 
 // addData();
 
 const Login: NextPage = () => {
